@@ -11,6 +11,8 @@ If you use it let me know, I'm @alfredofrlp on twitter.
 
 For [A-Frame](https://aframe.io).
 
+![Screenshot](./mirror.png "Multiple instances of the component.")
+
 ### API
 
 | Property   | Description                  | Default Value |
