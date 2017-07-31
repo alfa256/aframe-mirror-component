@@ -27,8 +27,8 @@ For [A-Frame](https://aframe.io).
 | interval   | snapshot interval            | 1000 ms       |
 | repeat     | take snapshot every interval | false         |
 
-For a realtime mirror effect I suggest a low resolution ( 32~64 ) and an interval of 150~300, low distance also helps.
-
+For a realtime mirror effect I suggest a low resolution ( 32 or 64 ) and an interval of 150 to 300, low distance also helps.
+Resolution needs to be a power of 2: 8, 16, 32, 64, 128 ...
 
 #### Browser
 
