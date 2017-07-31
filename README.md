@@ -11,6 +11,9 @@ If you use it let me know, I'm @alfredofrlp on twitter.
 
 For [A-Frame](https://aframe.io).
 
+[LIVE DEMO](https://alfa256.github.io/aframe-mirror-component/examples/basic/)
+ : WASD + mouse to look around.
+
 ![Screenshot](./mirror.png "Multiple instances of the component.")
 
 ### API
