@@ -97,7 +97,7 @@
 	        if(this.mesh){
 	            this.mesh.visible = false;
 	            AFRAME.scenes[0].renderer.autoClear = true;
-	            this.el.object3D.getWorldPosition(this.cam.position);
+	            this.cam.position.copy(this.el.object3D.worldToLocal(this.el.object3D.getWorldPosition()));
 	            this.cam.updateCubeMap( AFRAME.scenes[0].renderer, this.el.sceneEl.object3D );
 	            
 	            var mirrormat = this.mirrorMaterial;
