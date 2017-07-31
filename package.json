@@ -1,6 +1,6 @@
 {
   "name": "aframe-mirror-component",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Mirror effect material that works with snapshots of the scene.",
   "main": "index.js",
   "cdn": "dist/aframe-mirror-component.min.js",

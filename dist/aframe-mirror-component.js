@@ -73,15 +73,18 @@
 	   */
 	  init: function(){
 	          this.counter = this.data.interval;
-	          this.mesh = this.el.getObject3D('mesh');
+
 	          this.cam = new THREE.CubeCamera( 0.5, this.data.distance, this.data.resolution);
-	          
 	          this.el.object3D.add( this.cam );
-	          
 	          this.mirrorMaterial = new THREE.MeshBasicMaterial( { color: this.data.color, refractionRatio: this.data.refraction, envMap: this.cam.renderTarget.texture } );
-	          this.mesh.material = this.mirrorMaterial;
 	          this.done = false;
-	          
+	          var mirrormat = this.mirrorMaterial;
+	          this.mesh = this.el.getObject3D('mesh');
+	          if(this.mesh){
+	            this.mesh.traverse( function( child ) { 
+	                if ( child instanceof THREE.Mesh ) child.material = mirrormat;
+	            });
+	          }
 	  },
 	  
 	  tick: function(t,dt){
@@ -89,15 +92,24 @@
 	      if( this.counter > 0){
 	        this.counter-=dt;
 	      }else{
-	        this.mesh.visible = false;
-	        AFRAME.scenes[0].renderer.autoClear = true;
-	        this.cam.position.copy( this.el.object3D.position);
-	        this.cam.updateCubeMap( AFRAME.scenes[0].renderer, this.el.sceneEl.object3D );
-	        this.mesh.visible = true;
+	        this.mesh = this.el.getObject3D('mesh');
 	        
-	        if(!this.data.repeat){
-	          this.done = true;
-	          this.counter = this.data.interval;
+	        if(this.mesh){
+	            this.mesh.visible = false;
+	            AFRAME.scenes[0].renderer.autoClear = true;
+	            this.el.object3D.getWorldPosition(this.cam.position);
+	            this.cam.updateCubeMap( AFRAME.scenes[0].renderer, this.el.sceneEl.object3D );
+	            
+	            var mirrormat = this.mirrorMaterial;
+	            this.mesh.traverse( function( child ) { 
+	                if ( child instanceof THREE.Mesh ) child.material = mirrormat;
+	            });
+	            this.mesh.visible = true;
+	        
+	            if(!this.data.repeat){
+	              this.done = true;
+	              this.counter = this.data.interval;
+	            }
 	        }
 	      }
 	    }
