@@ -26,6 +26,7 @@ AFRAME.registerComponent('mirror', {
    * Called once when component is attached. Generally for initial setup.
    */
   init: function(){
+    console.log("MIRROR INIT");
           this.counter = this.data.interval;
 
           this.cam = new THREE.CubeCamera( 0.5, this.data.distance, this.data.resolution);
@@ -39,6 +40,7 @@ AFRAME.registerComponent('mirror', {
                 if ( child instanceof THREE.Mesh ) child.material = mirrormat;
             });
           }
+          this.worldPosition = new THREE.Vector3();  // create this once, not every tick
   },
   
   tick: function(t,dt){
@@ -51,8 +53,9 @@ AFRAME.registerComponent('mirror', {
         if(this.mesh){
             this.mesh.visible = false;
             AFRAME.scenes[0].renderer.autoClear = true;
-            this.cam.position.copy(this.el.object3D.worldToLocal(this.el.object3D.getWorldPosition()));
-            this.cam.updateCubeMap( AFRAME.scenes[0].renderer, this.el.sceneEl.object3D );
+            this.el.object3D.getWorldPosition(this.worldPosition);
+            this.cam.position.copy(this.el.object3D.worldToLocal(this.worldPosition));
+            this.cam.update( AFRAME.scenes[0].renderer, this.el.sceneEl.object3D );
             
             var mirrormat = this.mirrorMaterial;
             this.mesh.traverse( function( child ) { 
@@ -60,10 +63,10 @@ AFRAME.registerComponent('mirror', {
             });
             this.mesh.visible = true;
         
-            if(!this.data.repeat){
+            if(!this.data.repeat)
               this.done = true;
+            else
               this.counter = this.data.interval;
-            }
         }
       }
     }
